@@ -1,34 +1,23 @@
-def caesar(text, shift, encrypt=True):
+def pin_extractor(poems):
+    secret_codes = []
+    for poem in poems:
+        secret_code = ''
+        lines = poem.split('\n')
+        for line_index, line in enumerate(lines):
+            words = line.split()
+            if len(words) > line_index:
+                secret_code += str(len(words[line_index]))
+            else:
+                secret_code += '0'
+        secret_codes.append(secret_code)
+    return secret_codes
 
-    if not isinstance(shift, int):
-        return 'Shift must be an integer value.'
+poem = """Stars and the moon
+shine in the sky
+white and
+until the end of the night"""
 
-    if shift < 1 or shift > 25:
-        return 'Shift must be an integer between 1 and 25.'
+poem2 = 'The grass is green\nhere and there\nhoping for rain\nbefore it turns yellow'
+poem3 = 'There\nonce\nwas\na\ndragon'
 
-    alphabet = 'abcdefghijklmnopqrstuvwxyz'
-
-    if not encrypt:
-        shift = - shift
-    
-    shifted_alphabet = alphabet[shift:] + alphabet[:shift]
-    translation_table = str.maketrans(alphabet + alphabet.upper(), shifted_alphabet + shifted_alphabet.upper())
-    encrypted_text = text.translate(translation_table)
-    return encrypted_text
-
-def encrypt(text, shift):
-    return caesar(text, shift)
-    
-def decrypt(text, shift):
-    return caesar(text, shift, encrypt=False)
-
-
-while True:
-    options = input('Enter (E) for encrypt and (D) for decrypt: ')
-    if options.upper() == 'E':
-        text = input('Enter text to encrypt: ')
-    result = encrypt(text,3)
-    if options.upper() == 'D':
-        text = input('Enter text to decrypt: ')
-    result = decrypt(text,3)
-    print(result)
+print(pin_extractor([poem, poem2, poem3]))
