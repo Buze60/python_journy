@@ -1,94 +1,57 @@
-import re
+def add_setting(settings, setting_pair):
+    key, value = setting_pair
+    key = key.lower()
+    value = value.lower()
+
+    if key in settings:
+        return f"Setting '{key}' already exists! Cannot add a new setting with this name."
+
+    settings[key] = value
+    return f"Setting '{key}' added with value '{value}' successfully!"
 
 
-medical_records = [
-    {
-        'patient_id': 'P1001',
-        'age': 34,
-        'gender': 'Female',
-        'diagnosis': 'Hypertension',
-        'medications': ['Lisinopril'],
-        'last_visit_id': 'V2301',
-    },
-    {
-        'patient_id': 'p1002',
-        'age': 47,
-        'gender': 'male',
-        'diagnosis': 'Type 2 Diabetes',
-        'medications': ['Metformin', 'Insulin'],
-        'last_visit_id': 'v2302',
-    },
-    {
-        'patient_id': 'P1003',
-        'age': 29,
-        'gender': 'female',
-        'diagnosis': 'Asthma',
-        'medications': ['Albuterol'],
-        'last_visit_id': 'v2303',
-    },
-    {
-        'patient_id': 'p1004',
-        'age': 56,
-        'gender': 'Male',
-        'diagnosis': 'Chronic Back Pain',
-        'medications': ['Ibuprofen', 'Physical Therapy'],
-        'last_visit_id': 'V2304',
-    }
-]
+def update_setting(settings, setting_pair):
+    key, value = setting_pair
+    key = key.lower()
+    value = value.lower()
+
+    if key in settings:
+        settings[key] = value
+        return f"Setting '{key}' updated to '{value}' successfully!"
+
+    return f"Setting '{key}' does not exist! Cannot update a non-existing setting."
 
 
-def find_invalid_records(
-    patient_id, age, gender, diagnosis, medications, last_visit_id
-):
+def delete_setting(settings, key):
+    key = key.lower()
 
-    constraints = {
-        'patient_id': isinstance(patient_id, str)
-        and re.fullmatch('p\d+', patient_id, re.IGNORECASE),
-        'age': isinstance(age, int) and age >= 18,
-        'gender': isinstance(gender, str) and gender.lower() in ('male', 'female'),
-        'diagnosis': isinstance(diagnosis, str) or diagnosis is None,
-        'medications': isinstance(medications, list)
-        and all([isinstance(i, str) for i in medications]),
-        'last_visit_id': isinstance(last_visit_id, str)
-        and re.fullmatch('v\d+', last_visit_id, re.IGNORECASE)
-    }
+    if key in settings:
+        del settings[key]
+        return f"Setting '{key}' deleted successfully!"
 
-    return [key for key, value in constraints.items() if not value]
+    return "Setting not found!"
 
 
-def validate(data):
-    is_sequence = isinstance(data, (list, tuple))
+def view_settings(settings):
+    if not settings:
+        return "No settings available."
 
-    if not is_sequence:
-        print('Invalid format: expected a list or tuple.')
-        return False
-        
-    is_invalid = False
-    key_set = set(
-        ['patient_id', 'age', 'gender', 'diagnosis', 'medications', 'last_visit_id']
-    )
+    result = "Current User Settings:\n"
+    for key, value in settings.items():
+        result += f"{key.capitalize()}: {value}\n"
+    return result
 
-    for index, dictionary in enumerate(data):
-        if not isinstance(dictionary, dict):
-            print(f'Invalid format: expected a dictionary at position {index}.')
-            is_invalid = True
-            continue
 
-        if set(dictionary.keys()) != key_set:
-            print(
-                f'Invalid format: {dictionary} at position {index} has missing and/or invalid keys.'
-            )
-            is_invalid = True
-            continue
+test_settings = {}
 
-        invalid_records = find_invalid_records(**dictionary)
-        for key in invalid_records:
-            val = dictionary[key]
-            print(f"Unexpected format '{key}: {val}' at position {index}.")
-            is_invalid = True
-    if is_invalid:
-        return False
-    print('Valid format.')
-    return True
+print(add_setting(test_settings, ("Theme", "Dark")))
+print(add_setting(test_settings, ("Notifications", "Enabled")))
+print(add_setting(test_settings, ("Theme", "Light")))
 
-validate(medical_records)
+print(update_setting(test_settings, ("Theme", "Light")))
+print(update_setting(test_settings, ("Volume", "High")))
+
+print(delete_setting(test_settings, "Notifications"))
+print(delete_setting(test_settings, "Font"))
+
+print(view_settings(test_settings))
