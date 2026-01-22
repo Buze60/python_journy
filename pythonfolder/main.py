@@ -1,20 +1,52 @@
-class Student:
-    def __init__(self,name,age,grade):
-        self.name = name
-        self.age = age
-        self.grade = grade
-    
-    def getDetails(self):
-        return f"Name: {self.name} Age: {self.age} Grade: {self.grade}"
-    
-    def getAge(self):
-        return f"Age is: {self.age}"
-    def getGrade(self):
-        return f"Grade is: {self.grade}"
-    def getName(self):
-        return f"Name is: {self.name}"
-    
-Student1 = Student("Buze",24,12)
-print(Student1.getAge())
-print(Student1.getGrade())
-print(Student1.getDetails())
+class Cart:
+   def __init__(self):
+       self.items = []
+
+   def add(self, item):
+       self.items.append(item)
+
+   def remove(self, item):
+       if item in self.items:
+           self.items.remove(item)
+       else:
+           print(f'{item} is not in cart')
+
+   def list_items(self):
+       return self.items
+
+   def __len__(self):
+       return len(self.items)
+
+   def __getitem__(self, index):
+       return self.items[index]
+
+   def __contains__(self, item):
+       return item in self.items
+
+   def __iter__(self):
+       return iter(self.items)
+   
+   
+cart = Cart()
+
+print('W E L C O M E  T O  Y O U R  S H O P P I N G M A L L😊')
+
+choice = int(input('press 1-5 to continue shopping or exit:\n1. Add item\n2. Remove item\n3. View cart items\n4. View cart size\n5. Exit\n'))
+
+while choice != 5:
+    if choice == 1:
+        item = input("Enter item to add: ")
+        cart.add(item)
+        print(f"{item} added to cart.")
+    elif choice == 2:
+        item = input("Enter item to remove: ")
+        cart.remove(item)
+    elif choice == 3:
+        print("Cart items:", cart.list_items())
+    elif choice == 4:
+        print("Cart size:", len(cart))
+    else:
+        print("Invalid choice.")
+
+    choice = int(input('press 1-5 to continue shopping or exit:\n1. Add item\n2. Remove item\n3. View cart items\n4. View cart size\n5. Exit\n'))
+
