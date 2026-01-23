@@ -31,9 +31,9 @@ cart = Cart()
 
 print('W E L C O M E  T O  Y O U R  S H O P P I N G M A L L😊')
 
-choice = int(input('press 1-5 to continue shopping or exit:\n1. Add item\n2. Remove item\n3. View cart items\n4. View cart size\n5. Exit\n'))
+choice = int(input('press 1-5 to continue shopping or exit:\n1. Add item\n2. Remove item\n3. View cart items\n4. View cart size\n5. View Item in the cart\n6. Exit\n'))
 
-while choice != 5:
+while choice != 6:
     if choice == 1:
         item = input("Enter item to add: ")
         cart.add(item)
@@ -45,8 +45,14 @@ while choice != 5:
         print("Cart items:", cart.list_items())
     elif choice == 4:
         print("Cart size:", len(cart))
+    elif choice == 5:
+        item_contained = cart.__contains__(input('Enter item to check if it is in cart:'))
+        if item_contained == True:
+            print(f"Item is in the cart. {item_contained}")
+        else:
+            print("Item is not found in the cart!. ")
     else:
         print("Invalid choice.")
 
-    choice = int(input('press 1-5 to continue shopping or exit:\n1. Add item\n2. Remove item\n3. View cart items\n4. View cart size\n5. Exit\n'))
+    choice = int(input('press 1-6 to continue shopping or exit:\n1. Add item\n2. Remove item\n3. View cart items\n4. View cart size\n6. Exit\n'))
 
