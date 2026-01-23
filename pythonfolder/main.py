@@ -1,58 +1,28 @@
-class Cart:
-   def __init__(self):
-       self.items = []
+print('                                             WELCOME TO STUDENT MANAGEMENT SYSTEM!: ')
 
-   def add(self, item):
-       self.items.append(item)
+class Student:
+    def __init__(self,name,age,grade):
+        self.name = name
+        self.age = age
+        self.grade = grade
+    
+        
+    def GetStudentInfo(self):
+        return f'Student name:\n {self.name} \n Student age:\n {self.age} \n Student garade:\n {self.grade}'
+        
+student1 = Student('Bizuayehu',24,'C')
+student2 = Student('John',22,'A')
 
-   def remove(self, item):
-       if item in self.items:
-           self.items.remove(item)
-       else:
-           print(f'{item} is not in cart')
-
-   def list_items(self):
-       return self.items
-
-   def __len__(self):
-       return len(self.items)
-
-   def __getitem__(self, index):
-       return self.items[index]
-
-   def __contains__(self, item):
-       return item in self.items
-
-   def __iter__(self):
-       return iter(self.items)
-   
-   
-cart = Cart()
-
-print('W E L C O M E  T O  Y O U R  S H O P P I N G M A L L😊')
-
-choice = int(input('press 1-5 to continue shopping or exit:\n1. Add item\n2. Remove item\n3. View cart items\n4. View cart size\n5. View Item in the cart\n6. Exit\n'))
-
-while choice != 6:
+choice = int(input('1 for grade A\n2 for grade B\n3 for Whole student info C\n4 Exist'))
+while choice != 4:
     if choice == 1:
-        item = input("Enter item to add: ")
-        cart.add(item)
-        print(f"{item} added to cart.")
+        get_Student = input('Enter Student Name: ')
+        print(getattr(student2,get_Student,'the attribute not found!'))
     elif choice == 2:
-        item = input("Enter item to remove: ")
-        cart.remove(item)
+        get_Student = input('Enter Student Name: ')
+        print(getattr(student2,get_Student,'the attribute not found!'))
     elif choice == 3:
-        print("Cart items:", cart.list_items())
-    elif choice == 4:
-        print("Cart size:", len(cart))
-    elif choice == 5:
-        item_contained = cart.__contains__(input('Enter item to check if it is in cart:'))
-        if item_contained == True:
-            print(f"Item is in the cart. {item_contained}")
-        else:
-            print("Item is not found in the cart!. ")
+        print(Student.GetStudentInfo())
+        
     else:
-        print("Invalid choice.")
-
-    choice = int(input('press 1-6 to continue shopping or exit:\n1. Add item\n2. Remove item\n3. View cart items\n4. View cart size\n6. Exit\n'))
-
+        print('Invalid choice, please try again. 😊')
