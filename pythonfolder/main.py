@@ -1,28 +1,17 @@
-print('                                             WELCOME TO STUDENT MANAGEMENT SYSTEM!: ')
-
-class Student:
-    def __init__(self,name,age,grade):
+class Product:
+    def __init__(self,name,price,brand,model):
         self.name = name
-        self.age = age
-        self.grade = grade
-    
-        
-    def GetStudentInfo(self):
-        return f'Student name:\n {self.name} \n Student age:\n {self.age} \n Student garade:\n {self.grade}'
-        
-student1 = Student('Bizuayehu',24,'C')
-student2 = Student('John',22,'A')
+        self.price = price
+        self.brand = brand
+        self.model = model
+product = Product('T-shirt',45,'Nike','Air Max')
 
-choice = int(input('1 for grade A\n2 for grade B\n3 for Whole student info C\n4 Exist'))
-while choice != 4:
-    if choice == 1:
-        get_Student = input('Enter Student Name: ')
-        print(getattr(student2,get_Student,'the attribute not found!'))
-    elif choice == 2:
-        get_Student = input('Enter Student Name: ')
-        print(getattr(student2,get_Student,'the attribute not found!'))
-    elif choice == 3:
-        print(Student.GetStudentInfo())
-        
+
+attribute_check = []
+attribute_check = input('Enter attributes to check (separated by commas): ').split(',')
+
+for att in attribute_check:
+    if not hasattr(product,att):
+        print(f'ERROR: there is no such att called {att} ')
     else:
-        print('Invalid choice, please try again. 😊')
+        print(f'{att} {getattr(product,att)}')
