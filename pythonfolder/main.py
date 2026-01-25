@@ -1,17 +1,23 @@
-class Product:
-    def __init__(self,name,price,brand,model):
-        self.name = name
-        self.price = price
-        self.brand = brand
-        self.model = model
-product = Product('T-shirt',45,'Nike','Air Max')
+class UserSession:
+    def __init__(self,user_id,auth_token):
+        self.user_id = user_id
+        self.auth_token = auth_token
+        self.temp_counter = 0
+        
+session = UserSession(101,'abc123token')
+
+attributes_to_clean = ['auth_token','temp_counter']
+
+# loop through the list of the attributes to be cleaned
+for attr in attributes_to_clean:
+    if hasattr(session,attr):
+        delattr(session,attr)
+        print(f'Removed attribute: {attr}')
 
 
-attribute_check = []
-attribute_check = input('Enter attributes to check (separated by commas): ').split(',')
+print('\n Final attributes remaining: ')
 
-for att in attribute_check:
-    if not hasattr(product,att):
-        print(f'ERROR: there is no such att called {att} ')
-    else:
-        print(f'{att} {getattr(product,att)}')
+for attr in dir(session):
+    if not attr.startswith('__') and not callable(getattr(session,attr)):
+        print(f'{attr} : {getattr(session,attr)}')
+        
