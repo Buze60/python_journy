@@ -1,23 +1,19 @@
-class UserSession:
-    def __init__(self,user_id,auth_token):
-        self.user_id = user_id
-        self.auth_token = auth_token
-        self.temp_counter = 0
-        
-session = UserSession(101,'abc123token')
+class MusicalInstrument:
+    def __init__(self, name, instrument_type):
+        self.name = name
+        self.instrument_type = instrument_type
 
-attributes_to_clean = ['auth_token','temp_counter']
+    def play(self):
+        print(f'The {self.name} is fun to play!')
 
-# loop through the list of the attributes to be cleaned
-for attr in attributes_to_clean:
-    if hasattr(session,attr):
-        delattr(session,attr)
-        print(f'Removed attribute: {attr}')
+    def get_fact(self):
+        return f'The {self.name} is part of the {self.instrument_type} family of instruments.'
 
 
-print('\n Final attributes remaining: ')
+instrument_1 = MusicalInstrument('Oboe', 'woodwind')
+instrument_2 = MusicalInstrument('Trumpet', 'brass')
 
-for attr in dir(session):
-    if not attr.startswith('__') and not callable(getattr(session,attr)):
-        print(f'{attr} : {getattr(session,attr)}')
-        
+instrument_1.play()
+print(instrument_1.get_fact())
+instrument_2.play()
+print(instrument_2.get_fact())
