@@ -1,25 +1,36 @@
-class Planet:
-    def __init__(self,name,planet_type,star):
-        if not isinstance(name,str) or not isinstance(planet_type,str) or not isinstance(star,str):
-            raise TypeError("name, planet type, and star must be strings")
-        if not name.strip() or not planet_type or not star.strip():
-            raise ValueError("name, planet_type, and star must be non-empty strings")
+#============== EMAIL DATA BLUE PRINT====================
+# This module defines classes for Email, User, and Inbox to simulate a simple email system.
+class Email:
+    def __init__(self, sender, receiver, subject, body):
+        self.sender = sender
+        self.receiver = receiver
+        self.subject = subject
+        self.body = body
+        self.read = False
+
+    def mark_as_read(self):
+        self.read = True
+
+class User:
+    def __init__(self, name):
         self.name = name
-        self.planet_type = planet_type
-        self.star = star
-    def orbit(self):
-        return f"{self.name} is orbiting around {self.star}..."
-    def __str__(self):
-        return f"Planet: {self.name} | Type: {self.planet_type} | Star: {self.star}"
+        self.inbox = Inbox()
 
-planet_1 = Planet("Jupiter","Orbital","13")
-planet_2 = Planet("Venus","Orbital","12")
-planet_3 = Planet("Earth","Orbital","1")
+    def send_email(self, receiver, subject, body):
+        email = Email(sender=self, receiver=receiver, subject=subject, body=body)
+        receiver.inbox.receive_email(email)
 
-print(planet_1)
-print(planet_2)
-print(planet_3)
+class Inbox:
+    def __init__(self):
+        self.emails = []
 
-print(planet_1.orbit())
-print(planet_2.orbit())
-print(planet_3.orbit())
+    def receive_email(self, email):
+        self.emails.append(email)
+
+alice = User("Alice")
+bob = User("Bob")
+recieve_email = Inbox()
+
+alice.send_email(bob, "Geetings", "Hi Bob, how are you?")
+for email in bob.inbox.emails:
+    print(f"From: {email.sender.name}, Subject: {email.subject}, Body: {email.body} ")
