@@ -30,7 +30,7 @@ class Inbox:
 alice = User("Alice")
 bob = User("Bob")
 recieve_email = Inbox()
-
+print(alice.name)
 alice.send_email(bob, "Geetings", "Hi Bob, how are you?")
 for email in bob.inbox.emails:
     print(f"From: {email.sender.name}, Subject: {email.subject}, Body: {email.body} ")
